@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'Segment-Tune_Example', :exclusive => true do
+  pod 'Segment-Tune', :path => '../'
+end
+
+target 'Segment-Tune_Tests', :exclusive => true do
+  pod 'Segment-Tune', :path => '../'
+
+  
+end
