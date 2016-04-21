@@ -1,18 +1,26 @@
 //
-//  TuneAppDelegate.m
+//  TuneExampleAppDelegate.m
 //  Segment-Tune
 //
 //  Created by John Gu on 04/15/2016.
 //  Copyright (c) 2016 John Gu. All rights reserved.
 //
 
-#import "TuneAppDelegate.h"
+#import "TuneExampleAppDelegate.h"
+#import <Analytics/SEGAnalytics.h>
+#import <SEGTuneIntegration.h>
+#import <SEGTuneIntegrationFactory.h>
 
-@implementation TuneAppDelegate
+@implementation TuneExampleAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [SEGAnalytics debug:YES];
+    SEGAnalyticsConfiguration *config = [SEGAnalyticsConfiguration configurationWithWriteKey:@"foo"];
+    [config use:[SEGTuneIntegrationFactory instance]];
+    [SEGAnalytics setupWithConfiguration:config];
+    
     return YES;
 }
 

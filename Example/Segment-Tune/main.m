@@ -7,11 +7,11 @@
 //
 
 @import UIKit;
-#import "TuneAppDelegate.h"
+#import "TuneExampleAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([TuneAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([TuneExampleAppDelegate class]));
     }
 }

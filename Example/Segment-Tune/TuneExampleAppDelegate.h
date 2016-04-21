@@ -1,5 +1,5 @@
 //
-//  TuneAppDelegate.h
+//  TuneExampleAppDelegate
 //  Segment-Tune
 //
 //  Created by John Gu on 04/15/2016.
@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-@interface TuneAppDelegate : UIResponder <UIApplicationDelegate>
+@interface TuneExampleAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
