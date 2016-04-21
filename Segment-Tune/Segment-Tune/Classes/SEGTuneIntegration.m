@@ -15,7 +15,6 @@
     if (self = [super init]) {
         NSString *advertiserId = [settings objectForKey:@"advertiserId"];
         NSString *conversionKey = [settings objectForKey:@"conversionKey"];
-        bool turnOnTMA = [[settings objectForKey:@"turnOnTMA"] boolValue];
 
         if (!advertiserId || advertiserId.length == 0) {
             @throw([NSException
