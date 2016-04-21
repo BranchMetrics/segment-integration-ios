@@ -1,0 +1,22 @@
+PODS:
+  - Analytics (3.0.7)
+  - Segment-Tune (0.1.0):
+    - Analytics (~> 3.0.0)
+    - Tune (~> 4.2.0)
+  - Tune (4.2.0)
+
+DEPENDENCIES:
+  - Segment-Tune (from `../`)
+
+EXTERNAL SOURCES:
+  Segment-Tune:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Analytics: b342fb4f43fa4f97ca6f4358b44d3295217ba294
+  Segment-Tune: fd2e0dd0dc4152e17e85bef31bc006b548796d55
+  Tune: 11feb3e24498311cb182dfeec26aaa9fda18fbbf
+
+PODFILE CHECKSUM: fbcb55855882f94a01ce46fbf716e85147bc1fd5
+
+COCOAPODS: 1.0.0.beta.8
