@@ -25,15 +25,15 @@
                                                        @"Segment settings."]
                          userInfo:nil]);
         }
-       if (!conversionKey || conversionKey.length == 0) {
-           @throw([NSException
-               exceptionWithName:@"Tune Error"
-                          reason:[NSString
-                                     stringWithFormat:@"Tune: Please add "
-                                                      @"Tune conversion key "
-                                                      @"in Segment settings."]
-                        userInfo:nil]);
-       }
+        if (!conversionKey || conversionKey.length == 0) {
+            @throw([NSException
+                exceptionWithName:@"Tune Error"
+                           reason:[NSString
+                                      stringWithFormat:@"Tune: Please add "
+                                                       @"Tune conversion key "
+                                                       @"in Segment settings."]
+                         userInfo:nil]);
+        }
 
         [Tune initializeWithTuneAdvertiserId:advertiserId
                            tuneConversionKey:conversionKey];
