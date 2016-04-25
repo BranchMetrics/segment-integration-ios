@@ -15,7 +15,6 @@
     if (self = [super init]) {
         NSString *advertiserId = [settings objectForKey:@"advertiserId"];
         NSString *conversionKey = [settings objectForKey:@"conversionKey"];
-        bool turnOnTMA = [[settings objectForKey:@"turnOnTMA"] boolValue];
 
         if (!advertiserId || advertiserId.length == 0) {
             @throw([NSException
@@ -26,15 +25,15 @@
                                                        @"Segment settings."]
                          userInfo:nil]);
         }
-        if (!conversionKey || conversionKey.length == 0) {
-            @throw([NSException
-                exceptionWithName:@"Tune Error"
-                           reason:[NSString
-                                      stringWithFormat:@"Tune: Please add "
-                                                       @"Tune conversion key "
-                                                       @"in Segment settings."]
-                         userInfo:nil]);
-        }
+       if (!conversionKey || conversionKey.length == 0) {
+           @throw([NSException
+               exceptionWithName:@"Tune Error"
+                          reason:[NSString
+                                     stringWithFormat:@"Tune: Please add "
+                                                      @"Tune conversion key "
+                                                      @"in Segment settings."]
+                        userInfo:nil]);
+       }
 
         [Tune initializeWithTuneAdvertiserId:advertiserId
                            tuneConversionKey:conversionKey];
