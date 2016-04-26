@@ -51,6 +51,21 @@ SEGTuneIntegration *integration;
     XCTAssertNotNil(integration);
 }
 
+- (void)testMeasureSession
+{
+    id mockTune = OCMClassMock([Tune class]);
+    SEL selector = @selector(measureSession);
+    XCTAssertTrue([[Tune class] respondsToSelector:selector]);
+    OCMStub(ClassMethod([mockTune methodForSelector:selector]));
+    
+    [integration applicationDidBecomeActive];
+    
+    [[NSRunLoop mainRunLoop] runUntilDate:
+     [NSDate dateWithTimeIntervalSinceNow:0.01]];
+    // Verify measureSession was called
+    OCMVerify([mockTune measureSession]);
+}
+
 - (void)testIdentify
 {
     SEGIdentifyPayload* payload = [[SEGIdentifyPayload alloc]
@@ -99,26 +114,6 @@ SEGTuneIntegration *integration;
                                 integrations:nil];
     
     id mockTune = OCMClassMock([Tune class]);
-    
-    double testRevenue = 0.99;
-    NSString *testCurrency = @"CAD";
-    
-    
-    id mock = [OCMockObject mockForClass:[TuneEvent class]];
-    [[mock stub] revenue:OCMOCK_ANY]; // stubbing setTaskDescription: fails
-    [mock revenue:];
-    
-    
-    // Use a partial mock for the TuneEvent object to "set" its private property
-    id mockTuneEvent = OCMPartialMock([TuneEvent new]);
-    OCMStub([mockTuneEvent revenue]).andReturn(testRevenue);
-    OCMStub([mockTuneEvent currencyCode]).andReturn(testCurrency);
-    
-    TuneEvent *event = [TuneEvent new];
-    event.revenue = 0.99;
-    event.currencyCode = @"CAD";
-    id mockEvent = [OCMockObject partialMockForObject:event];
-    
     SEL selector = @selector(measureEvent:);
     XCTAssertTrue([[Tune class] respondsToSelector:selector]);
     OCMStub(ClassMethod([mockTune methodForSelector:selector]));
@@ -127,7 +122,8 @@ SEGTuneIntegration *integration;
     
     [[NSRunLoop mainRunLoop] runUntilDate:
      [NSDate dateWithTimeIntervalSinceNow:0.01]];
-    // Verify the results
+    // Verify measureEvent was called
+    OCMVerify([mockTune measureEvent:OCMOCK_ANY]);
 }
 
 - (void)testReset
