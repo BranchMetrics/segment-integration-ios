@@ -26,7 +26,7 @@
 
 - (NSString *)key
 {
-    return @"MobileAppTracking";
+    return @"TUNE";
 }
 
 @end

@@ -18,19 +18,19 @@
 
         if (!advertiserId || advertiserId.length == 0) {
             @throw([NSException
-                exceptionWithName:@"Tune Error"
+                exceptionWithName:@"TUNE Error"
                            reason:[NSString
-                                      stringWithFormat:@"Tune: Please add "
-                                                       @"Tune advertiser id in "
+                                      stringWithFormat:@"Please add "
+                                                       @"TUNE advertiser id in "
                                                        @"Segment settings."]
                          userInfo:nil]);
         }
         if (!conversionKey || conversionKey.length == 0) {
             @throw([NSException
-                exceptionWithName:@"Tune Error"
+                exceptionWithName:@"TUNE Error"
                            reason:[NSString
-                                      stringWithFormat:@"Tune: Please add "
-                                                       @"Tune conversion key "
+                                      stringWithFormat:@"Please add "
+                                                       @"TUNE conversion key "
                                                        @"in Segment settings."]
                          userInfo:nil]);
         }
@@ -39,7 +39,7 @@
                            tuneConversionKey:conversionKey];
         [Tune setDelegate:self];
 
-        SEGLog(@"Tune initialized");
+        SEGLog(@"TUNE initialized");
     }
     return self;
 }
@@ -48,7 +48,7 @@
 {
     // Attribution will not function without the measureSession call included
     [Tune measureSession];
-    SEGLog(@"Calling Tune measureSession");
+    SEGLog(@"Calling TUNE measureSession");
 }
 
 - (void)identify:(SEGIdentifyPayload *)payload
@@ -57,7 +57,7 @@
     [Tune setPhoneNumber:payload.traits[@"phone"]];
     [Tune setUserEmail:payload.traits[@"email"]];
     [Tune setUserName:payload.traits[@"username"]];
-    SEGLog(@"Setting Tune user identifiers");
+    SEGLog(@"Setting TUNE user identifiers");
 }
 
 - (void)track:(SEGTrackPayload *)payload
@@ -66,7 +66,7 @@
     event.revenue = [[payload.properties valueForKey:@"revenue"] doubleValue];
     event.currencyCode = payload.properties[@"currency"];
     [Tune measureEvent:event];
-    SEGLog(@"Calling Tune measureEvent with %@", payload.event);
+    SEGLog(@"Calling TUNE measureEvent with %@", payload.event);
 }
 
 - (void)reset
@@ -75,7 +75,7 @@
     [Tune setPhoneNumber:nil];
     [Tune setUserEmail:nil];
     [Tune setUserName:nil];
-    SEGLog(@"Clearing Tune user identifiers");
+    SEGLog(@"Clearing TUNE user identifiers");
 }
 
 - (void)tuneEnqueuedActionWithReferenceId:(NSString *)referenceId
