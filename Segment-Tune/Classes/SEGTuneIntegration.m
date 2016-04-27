@@ -62,11 +62,16 @@
 
 - (void)track:(SEGTrackPayload *)payload
 {
-    TuneEvent *event = [TuneEvent eventWithName:payload.event];
+    NSString *eventName = payload.event;
+    // Map Segment's "Completed Order" event to TUNE's "Purchase" event in order to record revenue
+    if ([eventName isEqualToString:@"Completed Order"]) {
+        eventName = TUNE_EVENT_PURCHASE;
+    }
+    TuneEvent *event = [TuneEvent eventWithName:eventName];
     event.revenue = [[payload.properties valueForKey:@"revenue"] doubleValue];
     event.currencyCode = payload.properties[@"currency"];
     [Tune measureEvent:event];
-    SEGLog(@"Calling TUNE measureEvent with %@", payload.event);
+    SEGLog(@"Calling TUNE measureEvent with %@", eventName);
 }
 
 - (void)reset
