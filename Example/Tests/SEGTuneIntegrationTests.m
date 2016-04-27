@@ -44,9 +44,9 @@ SEGTuneIntegration *integration;
 - (void)testFactory
 {
     integration = (SEGTuneIntegration *)[[SEGTuneIntegrationFactory alloc]
-     createWithSettings:@{ @"advertiserId" : @"877",
-                           @"conversionKey" : @"8c14d6bbe466b65211e781d62e301eec" }
-     forAnalytics:nil];
+                                         createWithSettings:@{ @"advertiserId" : @"877",
+                                                               @"conversionKey" : @"8c14d6bbe466b65211e781d62e301eec" }
+                                         forAnalytics:nil];
     
     XCTAssertNotNil(integration);
 }

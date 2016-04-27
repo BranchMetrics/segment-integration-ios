@@ -2,7 +2,7 @@
 //  TuneExampleAppDelegate.m
 //  Segment-Tune
 //
-//  Created by John Gu on 04/15/2016.
+//  Created by John Gu on 04/27/2016.
 //  Copyright (c) 2016 John Gu. All rights reserved.
 //
 
@@ -33,7 +33,6 @@
         UIRemoteNotificationTypeBadge;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:types];
     }
-    
     return YES;
 }
 

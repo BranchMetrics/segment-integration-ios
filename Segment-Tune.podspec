@@ -21,20 +21,18 @@ Pod::Spec.new do |s|
                        Tune Integration for Segment iOS SDK.
                        DESC
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/Segment-Tune"
+  s.homepage         = "https://github.com/MobileAppTracking/segment-integration-ios"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "John Gu" => "johng@tune.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/Segment-Tune.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/MobileAppTracking/segment-integration-ios.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'Segment-Tune/Classes/**/*'
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.public_header_files = 'Segment-Tune/Classes/**/*.h'
 
   s.dependency 'Analytics', '~> 3.0.0'
   s.dependency 'Tune', '~> 4.2.0'
