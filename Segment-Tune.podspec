@@ -37,5 +37,5 @@ Pod::Spec.new do |s|
   s.public_header_files = 'Segment-Tune/Classes/**/*.h'
 
   s.dependency 'Analytics', '~> 3.0.0'
-  s.dependency 'Tune', '~> 4.2.0'
+  s.dependency 'Tune', '~> 4.2.1'
 end
