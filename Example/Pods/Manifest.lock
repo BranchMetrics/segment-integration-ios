@@ -1,0 +1,25 @@
+PODS:
+  - Analytics (3.0.7)
+  - OCMock (3.2.2)
+  - Segment-Tune (0.1.0):
+    - Analytics (~> 3.0.0)
+    - Tune (~> 4.2.0)
+  - Tune (4.2.0)
+
+DEPENDENCIES:
+  - OCMock (~> 3.2.2)
+  - Segment-Tune (from `../`)
+
+EXTERNAL SOURCES:
+  Segment-Tune:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Analytics: b342fb4f43fa4f97ca6f4358b44d3295217ba294
+  OCMock: 18c9b7e67d4c2770e95bb77a9cc1ae0c91fe3835
+  Segment-Tune: 50d54720fb97d03fe591710e5800000425b441a9
+  Tune: 11feb3e24498311cb182dfeec26aaa9fda18fbbf
+
+PODFILE CHECKSUM: cb419158985cdb30720bd9e3c6a8a5265dbcd4a9
+
+COCOAPODS: 1.0.0.beta.8
