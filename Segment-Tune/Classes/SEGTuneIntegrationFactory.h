@@ -3,6 +3,6 @@
 
 @interface SEGTuneIntegrationFactory : NSObject<SEGIntegrationFactory>
 
-+ (id)instance;
++ (instancetype)instance;
 
 @end
