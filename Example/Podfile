@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+project 'Segment-Tune'
+
+target 'Segment-Tune_Example' do
+  pod 'Segment-Tune', :path => '../'
+end
+
+target 'Segment-Tune_Tests' do
+  pod 'Segment-Tune', :path => '../'
+  pod 'OCMock', '~> 3.2.2'
+end
