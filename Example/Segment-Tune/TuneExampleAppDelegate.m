@@ -36,6 +36,18 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+    // when the app is opened due to a deep link, call the Tune deep link setter
+    [Tune applicationDidOpenURL:[url absoluteString] sourceApplication:nil];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    // when the app is opened due to a deep link, call the Tune deep link setter
+    [Tune applicationDidOpenURL:[url absoluteString] sourceApplication:sourceApplication];
+    return YES;
+}
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [[SEGAnalytics sharedAnalytics] registeredForRemoteNotificationsWithDeviceToken:deviceToken];
 }
