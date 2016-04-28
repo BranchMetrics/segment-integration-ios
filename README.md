@@ -1,6 +1,5 @@
 # Segment-Tune
 
-[![CI Status](http://img.shields.io/travis/John Gu/Segment-Tune.svg?style=flat)](https://travis-ci.org/John Gu/Segment-Tune)
 [![Version](https://img.shields.io/cocoapods/v/Segment-Tune.svg?style=flat)](http://cocoapods.org/pods/Segment-Tune)
 [![License](https://img.shields.io/cocoapods/l/Segment-Tune.svg?style=flat)](http://cocoapods.org/pods/Segment-Tune)
 [![Platform](https://img.shields.io/cocoapods/p/Segment-Tune.svg?style=flat)](http://cocoapods.org/pods/Segment-Tune)
