@@ -19,19 +19,13 @@
         if (!advertiserId || advertiserId.length == 0) {
             @throw([NSException
                 exceptionWithName:@"TUNE Error"
-                           reason:[NSString
-                                      stringWithFormat:@"Please add "
-                                                       @"TUNE advertiser id in "
-                                                       @"Segment settings."]
+                           reason:[NSString stringWithFormat:@"Please add TUNE advertiser id in Segment settings."]
                          userInfo:nil]);
         }
         if (!conversionKey || conversionKey.length == 0) {
             @throw([NSException
                 exceptionWithName:@"TUNE Error"
-                           reason:[NSString
-                                      stringWithFormat:@"Please add "
-                                                       @"TUNE conversion key "
-                                                       @"in Segment settings."]
+                           reason:[NSString stringWithFormat:@"Please add TUNE conversion key in Segment settings."]
                          userInfo:nil]);
         }
 
