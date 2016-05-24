@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "Segment-Tune"
-  s.version          = "1.0.0"
+  s.version          = "1.0.1"
   s.summary          = "Tune Integration for Segment iOS SDK."
 
 # This description is used to generate tags and improve search results.
@@ -37,5 +37,5 @@ Pod::Spec.new do |s|
   s.public_header_files = 'Segment-Tune/Classes/**/*.h'
 
   s.dependency 'Analytics', '~> 3.0.0'
-  s.dependency 'Tune', '~> 4.2.1'
+  s.dependency 'Tune', '~> 4.3.0'
 end

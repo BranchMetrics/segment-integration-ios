@@ -84,7 +84,7 @@
 
 - (void)tuneDidSucceedWithData:(NSData *)data
 {
-    SEGLog(@"tuneDidSucceedWithData %@", [NSString stringWithUTF8String:[data bytes]]);
+    SEGLog(@"tuneDidSucceedWithData %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 }
 
 - (void)tuneDidFailWithError:(NSError *)error
