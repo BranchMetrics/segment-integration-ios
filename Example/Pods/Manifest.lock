@@ -1,10 +1,10 @@
 PODS:
-  - Analytics (3.0.7)
+  - Analytics (3.3.0)
   - OCMock (3.2.2)
-  - Segment-Tune (1.0.0):
-    - Analytics (~> 3.0.0)
-    - Tune (~> 4.3.0)
-  - Tune (4.3.0)
+  - Segment-Tune (1.0.2):
+    - Analytics (~> 3.0)
+    - Tune (~> 4.0)
+  - Tune (4.7.0)
 
 DEPENDENCIES:
   - OCMock (~> 3.2.2)
@@ -12,14 +12,14 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Segment-Tune:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
-  Analytics: b342fb4f43fa4f97ca6f4358b44d3295217ba294
+  Analytics: be3d952b8b0f21679e25af3b9dfbbab89597e897
   OCMock: 18c9b7e67d4c2770e95bb77a9cc1ae0c91fe3835
-  Segment-Tune: 654f66de15948f0fe391cfb137a3855f39ccaab5
-  Tune: e34e971ceffa89b0772496005f65749828868531
+  Segment-Tune: 5f6ed9a0036b3ea4f94dcd2c6321f5572aa7b106
+  Tune: a699a5793aca0d920b81dbe0c67eb0f666c6139c
 
 PODFILE CHECKSUM: cb419158985cdb30720bd9e3c6a8a5265dbcd4a9
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1

@@ -1,12 +1,10 @@
-// AnalyticsRequest.m
-// Copyright (c) 2014 Segment.io. All rights reserved.
-
 #define AssertMainThread() NSCParameterAssert([NSThread isMainThread])
 
 #import "SEGAnalyticsRequest.h"
 
 
-@interface SEGAnalyticsRequest () <NSURLConnectionDataDelegate> {
+@interface SEGAnalyticsRequest () <NSURLConnectionDataDelegate>
+{
     NSMutableData *_responseData;
 }
 
@@ -33,9 +31,12 @@
 
 - (void)start
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     self.connection = [[NSURLConnection alloc] initWithRequest:self.urlRequest
                                                       delegate:self
                                               startImmediately:NO];
+#pragma clang diagnostic pop
     [self.connection setDelegateQueue:[[self class] networkQueue]];
     [self.connection start];
 }

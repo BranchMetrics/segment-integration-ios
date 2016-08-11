@@ -1,29 +1,25 @@
-//
-//  SIOLocation.m
-//  Analytics
-//
-//  Created by Travis Jeffery on 4/25/14.
-//  Copyright (c) 2014 Segment.io. All rights reserved.
-//
-
 #import "SEGLocation.h"
 #import "SEGAnalyticsUtils.h"
 #import <CoreLocation/CoreLocation.h>
 
-#define LOCATION_STRING_PROPERTY(NAME, PLACEMARK_PROPERTY)                                      \
-    -(NSString *)NAME                                                                           \
-    {                                                                                           \
-        __block NSString *result = nil;                                                         \
-        dispatch_sync(self.syncQueue, ^{ result = self.currentPlacemark.PLACEMARK_PROPERTY; }); \
-        return result;                                                                          \
+#define LOCATION_STRING_PROPERTY(NAME, PLACEMARK_PROPERTY)     \
+    -(NSString *)NAME                                          \
+    {                                                          \
+        __block NSString *result = nil;                        \
+        dispatch_sync(self.syncQueue, ^{                       \
+            result = self.currentPlacemark.PLACEMARK_PROPERTY; \
+        });                                                    \
+        return result;                                         \
     }
 
-#define LOCATION_NUMBER_PROPERTY(NAME, PLACEMARK_PROPERTY)                                         \
-    -(NSNumber *)NAME                                                                              \
-    {                                                                                              \
-        __block NSNumber *result = nil;                                                            \
-        dispatch_sync(self.syncQueue, ^{ result = @(self.currentPlacemark.PLACEMARK_PROPERTY); }); \
-        return result;                                                                             \
+#define LOCATION_NUMBER_PROPERTY(NAME, PLACEMARK_PROPERTY)        \
+    -(NSNumber *)NAME                                             \
+    {                                                             \
+        __block NSNumber *result = nil;                           \
+        dispatch_sync(self.syncQueue, ^{                          \
+            result = @(self.currentPlacemark.PLACEMARK_PROPERTY); \
+        });                                                       \
+        return result;                                            \
     }
 
 #define LOCATION_AGE 300.0 // 5 minutes
@@ -51,7 +47,9 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.locationManager = [[CLLocationManager alloc] init];
             self.locationManager.delegate = self;
+#if TARGET_OS_IOS
             [self.locationManager startUpdatingLocation];
+#endif
         });
     }
     return self;
@@ -64,6 +62,8 @@ LOCATION_STRING_PROPERTY(postalCode, postalCode);
 LOCATION_STRING_PROPERTY(street, thoroughfare);
 LOCATION_NUMBER_PROPERTY(latitude, location.coordinate.latitude);
 LOCATION_NUMBER_PROPERTY(longitude, location.coordinate.longitude);
+
+#if TARGET_OS_IOS || (TARGET_OS_MAC && !TARGET_OS_IPHONE)
 LOCATION_NUMBER_PROPERTY(speed, location.speed);
 
 - (void)startUpdatingLocation
@@ -79,6 +79,7 @@ LOCATION_NUMBER_PROPERTY(speed, location.speed);
         }
     }
 }
+#endif
 
 - (BOOL)hasKnownLocation
 {

@@ -1,11 +1,3 @@
-//
-//  SIOBluetooth.m
-//  Analytics
-//
-//  Created by Travis Jeffery on 4/23/14.
-//  Copyright (c) 2014 Segment.io. All rights reserved.
-//
-
 #import "SEGBluetooth.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
@@ -44,5 +36,4 @@ const NSString *SEGCentralManagerClass = @"CBCentralManager";
 }
 
 - (void)centralManagerDidUpdateState:(id)central {}
-
 @end

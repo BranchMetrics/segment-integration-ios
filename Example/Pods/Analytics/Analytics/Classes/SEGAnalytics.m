@@ -1,15 +1,13 @@
-// Analytics.m
-// Copyright (c) 2014 Segment.io. All rights reserved.
-
 #import <UIKit/UIKit.h>
 #import "SEGAnalyticsUtils.h"
 #import "SEGAnalyticsRequest.h"
 #import "SEGAnalytics.h"
-
 #import "SEGIntegrationFactory.h"
 #import "SEGIntegration.h"
-#import <objc/runtime.h>
 #import "SEGSegmentIntegrationFactory.h"
+#import "UIViewController+SEGScreen.h"
+#import "SEGStoreKitTracker.h"
+#import <objc/runtime.h>
 
 static SEGAnalytics *__sharedInstance = nil;
 NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.did.start";
@@ -75,6 +73,7 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
 @property (nonatomic, strong) NSMutableDictionary *integrations;
 @property (nonatomic, strong) NSMutableDictionary *registeredIntegrations;
 @property (nonatomic) volatile BOOL initialized;
+@property (nonatomic, strong) SEGStoreKitTracker *storeKitTracker;
 
 @end
 
@@ -123,12 +122,74 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
                                   UIApplicationDidBecomeActiveNotification ]) {
             [nc addObserver:self selector:@selector(handleAppStateNotification:) name:name object:nil];
         }
+
+        if (configuration.recordScreenViews) {
+            [UIViewController seg_swizzleViewDidAppear];
+        }
+        if (configuration.trackInAppPurchases) {
+            _storeKitTracker = [SEGStoreKitTracker trackTransactionsForAnalytics:self];
+        }
+
+        [self trackApplicationLifecycleEvents:configuration.trackApplicationLifecycleEvents];
+
+#if !TARGET_OS_TV
+        if (configuration.trackPushNotifications && configuration.launchOptions) {
+            NSDictionary *remoteNotification = configuration.launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+            if (remoteNotification) {
+                [self trackPushNotification:remoteNotification fromLaunch:YES];
+            }
+        }
+#endif
     }
     return self;
 }
 
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 #pragma mark - NSNotificationCenter Callback
+NSString *const SEGVersionKey = @"SEGVersionKey";
+NSString *const SEGBuildKey = @"SEGBuildKey";
+
+- (void)trackApplicationLifecycleEvents:(BOOL)trackApplicationLifecycleEvents
+{
+    if (!trackApplicationLifecycleEvents) {
+        return;
+    }
+
+    NSString *previousVersion = [[NSUserDefaults standardUserDefaults] stringForKey:SEGVersionKey];
+    NSInteger previousBuild = [[NSUserDefaults standardUserDefaults] integerForKey:SEGBuildKey];
+
+    NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+    NSInteger currentBuild = [[[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"] integerValue];
+
+    if (!previousBuild) {
+        [self track:@"Application Installed" properties:@{
+            @"version" : currentVersion,
+            @"build" : @(currentBuild)
+        }];
+    } else if (currentBuild != previousBuild) {
+        [self track:@"Application Updated" properties:@{
+            @"previous_version" : previousVersion,
+            @"previous_build" : @(previousBuild),
+            @"version" : currentVersion,
+            @"build" : @(currentBuild)
+        }];
+    }
+
+
+    [self track:@"Application Opened" properties:@{
+        @"version" : currentVersion,
+        @"build" : @(currentBuild)
+    }];
+
+    [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:SEGVersionKey];
+    [[NSUserDefaults standardUserDefaults] setInteger:currentBuild forKey:SEGBuildKey];
+}
 
 
 - (void)onAppForeground:(NSNotification *)note
@@ -143,19 +204,19 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
     static dispatch_once_t selectorMappingOnce;
     dispatch_once(&selectorMappingOnce, ^{
         selectorMapping = @{
-                            UIApplicationDidFinishLaunchingNotification :
-                                NSStringFromSelector(@selector(applicationDidFinishLaunching:)),
-                            UIApplicationDidEnterBackgroundNotification :
-                                NSStringFromSelector(@selector(applicationDidEnterBackground)),
-                            UIApplicationWillEnterForegroundNotification :
-                                NSStringFromSelector(@selector(applicationWillEnterForeground)),
-                            UIApplicationWillTerminateNotification :
-                                NSStringFromSelector(@selector(applicationWillTerminate)),
-                            UIApplicationWillResignActiveNotification :
-                                NSStringFromSelector(@selector(applicationWillResignActive)),
-                            UIApplicationDidBecomeActiveNotification :
-                                NSStringFromSelector(@selector(applicationDidBecomeActive))
-                            };
+            UIApplicationDidFinishLaunchingNotification :
+                NSStringFromSelector(@selector(applicationDidFinishLaunching:)),
+            UIApplicationDidEnterBackgroundNotification :
+                NSStringFromSelector(@selector(applicationDidEnterBackground)),
+            UIApplicationWillEnterForegroundNotification :
+                NSStringFromSelector(@selector(applicationWillEnterForeground)),
+            UIApplicationWillTerminateNotification :
+                NSStringFromSelector(@selector(applicationWillTerminate)),
+            UIApplicationWillResignActiveNotification :
+                NSStringFromSelector(@selector(applicationWillResignActive)),
+            UIApplicationDidBecomeActiveNotification :
+                NSStringFromSelector(@selector(applicationDidBecomeActive))
+        };
     });
     SEL selector = NSSelectorFromString(selectorMapping[note.name]);
     if (selector) {
@@ -298,8 +359,20 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
                                   sync:false];
 }
 
+- (void)trackPushNotification:(NSDictionary *)properties fromLaunch:(BOOL)launch
+{
+    if (launch) {
+        [self track:@"Push Notification Tapped" properties:properties];
+    } else {
+        [self track:@"Push Notification Received" properties:properties];
+    }
+}
+
 - (void)receivedRemoteNotification:(NSDictionary *)userInfo
 {
+    if (self.configuration.trackPushNotifications) {
+        [self trackPushNotification:userInfo fromLaunch:NO];
+    }
     [self callIntegrationsWithSelector:_cmd arguments:@[ userInfo ] options:nil sync:true];
 }
 
@@ -318,6 +391,37 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
 - (void)handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo
 {
     [self callIntegrationsWithSelector:_cmd arguments:@[ identifier, userInfo ] options:nil sync:true];
+}
+
+- (void)continueUserActivity:(NSUserActivity *)activity
+{
+    [self callIntegrationsWithSelector:_cmd arguments:@[ activity ] options:nil sync:true];
+
+    if (!self.configuration.trackDeepLinks) {
+        return;
+    }
+
+    if ([activity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+        NSMutableDictionary *properties = [NSMutableDictionary dictionaryWithCapacity:activity.userInfo.count + 2];
+        [properties addEntriesFromDictionary:activity.userInfo];
+        properties[@"url"] = activity.webpageURL;
+        properties[@"title"] = activity.title ?: @"";
+        [self track:@"Deep Link Opened" properties:[properties copy]];
+    }
+}
+
+- (void)openURL:(NSURL *)url options:(NSDictionary *)options
+{
+    [self callIntegrationsWithSelector:_cmd arguments:@[ url, options ] options:nil sync:true];
+
+    if (!self.configuration.trackDeepLinks) {
+        return;
+    }
+
+    NSMutableDictionary *properties = [NSMutableDictionary dictionaryWithCapacity:options.count + 2];
+    [properties addEntriesFromDictionary:options];
+    properties[@"url"] = url.absoluteString;
+    [self track:@"Deep Link Opened" properties:[properties copy]];
 }
 
 - (void)reset
@@ -428,7 +532,7 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
 
 + (NSString *)version
 {
-    return @"3.0.7";
+    return @"3.3.0";
 }
 
 #pragma mark - Private
@@ -490,7 +594,8 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
 
     NSString *eventType = NSStringFromSelector(selector);
     if ([eventType hasPrefix:@"track:"]) {
-        BOOL enabled = [self isTrackEvent:arguments[0] enabledForIntegration:key inPlan:self.cachedSettings[@"plan"]];
+        SEGTrackPayload *eventPayload = arguments[0];
+        BOOL enabled = [self isTrackEvent:eventPayload.event enabledForIntegration:key inPlan:self.cachedSettings[@"plan"]];
         if (!enabled) {
             SEGLog(@"Not sending call to %@ because it is disabled in plan.", key);
             return;

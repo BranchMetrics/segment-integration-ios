@@ -1,11 +1,3 @@
-//
-//  SIOLocation.h
-//  Analytics
-//
-//  Created by Travis Jeffery on 4/25/14.
-//  Copyright (c) 2014 Segment.io. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 
@@ -23,6 +15,9 @@
 @property (nonatomic, copy, readonly) NSDictionary *addressDictionary;
 @property (nonatomic, assign, readonly) BOOL hasKnownLocation;
 
+
+#if TARGET_OS_IOS || (TARGET_OS_MAC && !TARGET_OS_IPHONE)
 - (void)startUpdatingLocation;
+#endif
 
 @end
