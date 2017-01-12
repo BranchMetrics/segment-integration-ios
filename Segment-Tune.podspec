@@ -24,10 +24,10 @@ Pod::Spec.new do |s|
                        This is the TUNE integration for the iOS library.
                        DESC
 
-  s.homepage         = "https://github.com/MobileAppTracking/segment-integration-ios"
+  s.homepage         = "https://github.com/TuneOSS/segment-integration-ios"
   s.license          = 'MIT'
   s.author           = { "TUNE" => "mobile@tune.com" }
-  s.source           = { :git => "https://github.com/MobileAppTracking/segment-integration-ios.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/TuneOSS/segment-integration-ios.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/tune'
 
   s.ios.deployment_target = '8.0'
