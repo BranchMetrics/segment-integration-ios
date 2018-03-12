@@ -8,8 +8,8 @@
 
 #import "TuneExampleAppDelegate.h"
 #import <Analytics/SEGAnalytics.h>
-#import <SEGTuneIntegration.h>
-#import <SEGTuneIntegrationFactory.h>
+#import "SEGTuneIntegration.h"
+#import "SEGTuneIntegrationFactory.h"
 
 @implementation TuneExampleAppDelegate
 
@@ -39,13 +39,13 @@
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
     // when the app is opened due to a deep link, call the Tune deep link setter
     NSString *sourceApplication = options[UIApplicationLaunchOptionsSourceApplicationKey];
-    [Tune applicationDidOpenURL:[url absoluteString] sourceApplication:sourceApplication];
+    [Tune handleOpenURL:url options:options];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     // when the app is opened due to a deep link, call the Tune deep link setter
-    [Tune applicationDidOpenURL:[url absoluteString] sourceApplication:sourceApplication];
+    [Tune handleOpenURL:url sourceApplication:sourceApplication];
     return YES;
 }
 
