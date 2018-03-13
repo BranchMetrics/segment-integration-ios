@@ -1,0 +1,6 @@
+framework module Segment_Tune {
+  umbrella header "Segment-Tune-umbrella.h"
+
+  export *
+  module * { export * }
+}

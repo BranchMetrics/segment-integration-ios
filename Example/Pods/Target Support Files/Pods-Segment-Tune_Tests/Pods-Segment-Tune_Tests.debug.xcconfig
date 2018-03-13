@@ -1,9 +1,10 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Tune"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Analytics" "${PODS_CONFIGURATION_BUILD_DIR}/OCMock" "${PODS_CONFIGURATION_BUILD_DIR}/Segment-Tune" "${PODS_ROOT}/Tune"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Analytics" "${PODS_ROOT}/Headers/Public/OCMock" "${PODS_ROOT}/Headers/Public/Segment-Tune" "${PODS_ROOT}/Headers/Public/Tune"
-LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/Analytics" "$PODS_CONFIGURATION_BUILD_DIR/OCMock" "$PODS_CONFIGURATION_BUILD_DIR/Segment-Tune"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Analytics" -isystem "${PODS_ROOT}/Headers/Public/OCMock" -isystem "${PODS_ROOT}/Headers/Public/Segment-Tune" -isystem "${PODS_ROOT}/Headers/Public/Tune"
-OTHER_LDFLAGS = $(inherited) -ObjC -ObjC, -l"Analytics" -l"OCMock" -l"Segment-Tune" -l"z" -framework "AdSupport" -framework "CoreSpotlight" -framework "CoreTelephony" -framework "MobileCoreServices" -framework "StoreKit" -framework "SystemConfiguration" -framework "Tune" -framework "UIKit" -framework "iAd"
-PODS_BUILD_DIR = $BUILD_DIR
-PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Tune"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Analytics/Analytics.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/OCMock/OCMock.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/Segment-Tune/Segment_Tune.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Tune"
+OTHER_LDFLAGS = $(inherited) -ObjC, -l"z" -framework "AdSupport" -framework "Analytics" -framework "CoreBluetooth" -framework "CoreLocation" -framework "CoreSpotlight" -framework "CoreTelephony" -framework "MobileCoreServices" -framework "OCMock" -framework "Segment_Tune" -framework "StoreKit" -framework "SystemConfiguration" -framework "Tune" -framework "UIKit" -framework "iAd" -weak_framework "UserNotifications"
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods

@@ -1,16 +1,16 @@
 {
   "name": "Segment-Tune",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "summary": "Tune Integration for Segment iOS SDK.",
   "description": "Analytics for iOS provides a single API that lets you\nintegrate with over 100s of tools.\n\nThis is the TUNE integration for the iOS library.",
-  "homepage": "https://github.com/MobileAppTracking/segment-integration-ios",
+  "homepage": "https://github.com/TuneOSS/segment-integration-ios",
   "license": "MIT",
   "authors": {
     "TUNE": "mobile@tune.com"
   },
   "source": {
-    "git": "https://github.com/MobileAppTracking/segment-integration-ios.git",
-    "tag": "1.0.2"
+    "git": "https://github.com/TuneOSS/segment-integration-ios.git",
+    "tag": "1.1.0"
   },
   "social_media_url": "https://twitter.com/tune",
   "platforms": {
@@ -23,7 +23,7 @@
       "~> 3.0"
     ],
     "Tune": [
-      "~> 4.0"
+      "~> 5.0"
     ]
   }
 }

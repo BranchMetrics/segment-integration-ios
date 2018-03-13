@@ -2,6 +2,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 project 'Segment-Tune'
 
+use_frameworks!
+
 target 'Segment-Tune_Example' do
   pod 'Segment-Tune', :path => '../'
 end
