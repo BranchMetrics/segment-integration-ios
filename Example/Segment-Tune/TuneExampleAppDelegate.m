@@ -38,7 +38,6 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
     // when the app is opened due to a deep link, call the Tune deep link setter
-    NSString *sourceApplication = options[UIApplicationLaunchOptionsSourceApplicationKey];
     [Tune handleOpenURL:url options:options];
     return YES;
 }
