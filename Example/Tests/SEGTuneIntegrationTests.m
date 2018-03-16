@@ -6,8 +6,8 @@
 //  Copyright (c) 2016 John Gu. All rights reserved.
 //
 
-#import <SEGTuneIntegration.h>
-#import <SEGTuneIntegrationFactory.h>
+#import "SEGTuneIntegration.h"
+#import "SEGTuneIntegrationFactory.h"
 #import <OCMock/OCMock.h>
 
 @import XCTest;
