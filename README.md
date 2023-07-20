@@ -1,3 +1,5 @@
+This repo is deprecated
+
 # Segment-Tune
 
 [![Version](https://img.shields.io/cocoapods/v/Segment-Tune.svg?style=flat)](http://cocoapods.org/pods/Segment-Tune)
